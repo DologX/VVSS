@@ -1,11 +1,14 @@
 package org.example;
 
 import domain.Student;
+import domain.Tema;
 import org.junit.*;
 import repository.StudentRepository;
 import repository.StudentXMLRepository;
+import repository.TemaRepository;
 import service.Service;
 import validation.StudentValidator;
+import validation.TemaValidator;
 import validation.ValidationException;
 
 import java.util.Collection;
@@ -22,11 +25,15 @@ public class AppTest
 {
     private StudentValidator studentValidator;
     private StudentRepository studentRepository;
+    private TemaValidator assignmentValidator;
+    private TemaRepository assignmentRepository;
 
     @Before
     public void setup() {
         this.studentValidator = new StudentValidator();
         this.studentRepository = new StudentRepository(studentValidator);
+        this.assignmentValidator = new TemaValidator();
+        this.assignmentRepository = new TemaRepository(assignmentValidator);
     }
 
     @Test
@@ -92,5 +99,23 @@ public class AppTest
         Student testStudent = new Student(studentId, "test8", 937);
         studentRepository.save(testStudent);
         studentRepository.save(testStudent);
+    }
+
+    @Test
+    public void testSaveAssignment_assignmentWithValidIdIsSaved() {
+        Tema assignment = new Tema("123", "ceva tema", 5, 3);
+        assignmentRepository.save(assignment);
+
+        int numberOfAssignments = StreamSupport
+                .stream(assignmentRepository.findAll().spliterator(), false)
+                .toArray().length;
+
+        assertEquals(1, numberOfAssignments);
+    }
+
+    @Test(expected = Exception.class)
+    public void testSaveAssignment_assignmentWithInvalidIdIsRejected() {
+        Tema assignment = new Tema("", "ceva tema", 5, 3);
+        assignmentRepository.save(assignment);
     }
 }
