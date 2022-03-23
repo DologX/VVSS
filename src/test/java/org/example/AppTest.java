@@ -51,21 +51,45 @@ public class AppTest
     }
 
     @Test(expected = ValidationException.class)
-    public void testSaveStudent_entityRejectedForAnInvalidGroupNumber() {
-        Student testStudent = new Student("111", "test2", 940);
+    public void testSaveStudent_entityRejectedForAnInvalidId() {
+        Student testStudent = new Student("", "test2", 937);
         studentRepository.save(testStudent);
     }
 
     @Test(expected = ValidationException.class)
     public void testSaveStudent_entityRejectedForAnInvalidName() {
-        Student testStudent = new Student("222", "", 940);
+        Student testStudent = new Student("222", "", 937);
         studentRepository.save(testStudent);
+    }
+
+    @Test(expected = ValidationException.class)
+    public void testSaveStudent_entityRejectedForLowerBoundaryValueForGroupNumbers() {
+        Student testStudent = new Student("222", "test5", 110);
+        studentRepository.save(testStudent);
+    }
+
+    @Test(expected = ValidationException.class)
+    public void testSaveStudent_entityRejectedForUpperBoundaryValueForGroupNumbers() {
+        Student testStudent = new Student("222", "test6", 938);
+        studentRepository.save(testStudent);
+    }
+
+    @Test
+    public void testSaveStudent_validGroupNumber() {
+        Student testStudent = new Student("222", "test7", 937);
+        studentRepository.save(testStudent);
+
+        int numberOfStudents = StreamSupport
+                .stream(studentRepository.findAll().spliterator(), false)
+                .toArray().length;
+
+        assertEquals(1, numberOfStudents);
     }
 
     @Test
     public void testSaveStudent_checkIfDuplicateIdIsIgnored() {
         String studentId = "1234";
-        Student testStudent = new Student(studentId, "test4", 937);
+        Student testStudent = new Student(studentId, "test8", 937);
         studentRepository.save(testStudent);
         studentRepository.save(testStudent);
 
@@ -74,4 +98,6 @@ public class AppTest
                 .filter(student -> student.getID().equals(studentId));
         assertEquals(1, filteredStudents.toArray().length);
     }
+
+
 }
