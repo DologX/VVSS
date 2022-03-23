@@ -86,18 +86,11 @@ public class AppTest
         assertEquals(1, numberOfStudents);
     }
 
-    @Test
+    @Test(expected = Exception.class)
     public void testSaveStudent_checkIfDuplicateIdIsIgnored() {
         String studentId = "1234";
         Student testStudent = new Student(studentId, "test8", 937);
         studentRepository.save(testStudent);
         studentRepository.save(testStudent);
-
-        Iterable<Student> students = studentRepository.findAll();
-        Stream<Student> filteredStudents = StreamSupport.stream(students.spliterator(), false)
-                .filter(student -> student.getID().equals(studentId));
-        assertEquals(1, filteredStudents.toArray().length);
     }
-
-
 }
