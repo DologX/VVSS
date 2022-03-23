@@ -1,27 +1,51 @@
 package org.example;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import domain.Student;
+import org.junit.*;
+import repository.StudentRepository;
+import repository.StudentXMLRepository;
+import service.Service;
+import validation.StudentValidator;
 
-import org.junit.Test;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
+
+import static org.junit.Assert.*;
 
 /**
  * Unit test for simple App.
  */
 public class AppTest 
 {
-    /**
-     * Rigorous Test :-)
-     */
-    @Test
-    public void shouldAnswerWithTrue()
-    {
-        assertTrue( true );
+    private StudentValidator studentValidator;
+    private StudentRepository studentRepository;
+
+    @Before
+    public void setup() {
+        this.studentValidator = new StudentValidator();
+        this.studentRepository = new StudentRepository(studentValidator);
     }
 
     @Test
-    public void shouldAnswerWithFalse()
-    {
-        assertFalse( false );
+    public void shouldAnswerWithTrue() {
+        assertTrue( true);
+    }
+
+    @Test
+    public void shouldAnswerWithFalse() {
+        assertFalse(false);
+    }
+
+    @Test
+    public void testSaveStudent_entitySavedInTheRepositoryContainer() {
+        Student testStudent = new Student("1543", "test1", 937);
+        studentRepository.save(testStudent);
+
+        Iterable<Student> students = studentRepository.findAll();
+        Stream<Student> filteredStudents = StreamSupport.stream(students.spliterator(), false)
+                .filter(student -> student.getID().equals("1543"));
+        assertEquals(1, filteredStudents.toArray().length);
     }
 }
