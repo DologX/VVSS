@@ -118,4 +118,22 @@ public class AppTest
         Tema assignment = new Tema("", "ceva tema", 5, 3);
         assignmentRepository.save(assignment);
     }
+
+    @Test(expected = Exception.class)
+    public void testSaveAssignment_assignmentWithInvalidDescriptionIsRejected() {
+        Tema assignment = new Tema("12345", "", 2, 1);
+        assignmentRepository.save(assignment);
+    }
+
+    @Test(expected = Exception.class)
+    public void testSaveAssignment_assignmentWithInvalidDeadlineIsRejected() {
+        Tema assignment = new Tema("123456", "ceva tema 2", -2, 1);
+        assignmentRepository.save(assignment);
+    }
+
+    @Test(expected = Exception.class)
+    public void testSaveAssignment_assignmentWithInvalidStartlineIsRejected() {
+        Tema assignment = new Tema("123456", "ceva tema 2", 2, -1);
+        assignmentRepository.save(assignment);
+    }
 }
