@@ -1,0 +1,14 @@
+@Test
+public void searching_by_keyword_football_should_display_the_corresponding_article() {
+	anna.is_the_home_page();
+	anna.looks_for("football");
+	anna.should_see_definition("A sport played on foot in which teams attempt to get a ball into a goal or zone defended by the other team");
+}
+
+@Test
+public void searching_by_keyword_tennis_should_display_the_corresponding_article() {
+	anna.is_the_home_page();
+	anna.looks_for("tennis");
+	anna.should_see_definition("A sport played by two players (or four in doubles), who alternately strike the ball over a net using racquets");
+}
+

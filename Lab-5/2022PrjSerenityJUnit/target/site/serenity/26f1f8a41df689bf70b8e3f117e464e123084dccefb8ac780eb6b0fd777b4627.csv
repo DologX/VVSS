@@ -1,0 +1,6 @@
+"Story","Title","Result","Date","Stability","Duration (s)"
+"Search by keyword story ddt","Search wiki by keyword test DDT","SUCCESS","2022-04-20T17:05:08.058+03:00[Europe/Bucharest]","0.0","22.92"
+"Search by keyword story","Searching by keyword football should display the corresponding article","SUCCESS","2022-04-20T17:24:39.22+03:00[Europe/Bucharest]","0.0","3.43"
+"Search by keyword story","Searching by keyword banana should display the corresponding article","SUCCESS","2022-04-20T17:24:42.844+03:00[Europe/Bucharest]","0.0","1.78"
+"Search by keyword story","Searching by keyword tennis should display the corresponding article","SUCCESS","2022-04-20T17:24:44.658+03:00[Europe/Bucharest]","0.0","2.05"
+"Search by keyword story","Searching by keyword apple should display the corresponding article","SUCCESS","2022-04-20T17:24:46.743+03:00[Europe/Bucharest]","0.0","2.41"
